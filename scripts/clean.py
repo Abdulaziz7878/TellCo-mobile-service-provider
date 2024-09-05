@@ -10,7 +10,7 @@ current_dir = os.path.abspath(r'C:\\Users\\ende\\Desktop\\10x\\Week-2\\scripts')
 project_dir = os.path.dirname(current_dir)
 # Add the project directory to the Python path
 sys.path.append(project_dir)
-from src.utils import missing_values_table
+from scripts.utils import missing_values_table
 
 def clean_data(df):
     # Convert 'Start' and 'End' to datetime format and drop rows with null values in these columns
