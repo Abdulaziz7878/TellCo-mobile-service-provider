@@ -5,7 +5,7 @@ import numpy as np  # Import numpy for numeric data type checking
 from datetime import datetime
 
 # Get the absolute path to the parent directory of the notebook
-current_dir = os.path.abspath(r'C:\\Users\\ende\\Desktop\\10x\\Week-2\\scripts')
+current_dir = os.getcwd()
 # Get the absolute path to the parent directory of the notebook's parent directory
 project_dir = os.path.dirname(current_dir)
 # Add the project directory to the Python path
