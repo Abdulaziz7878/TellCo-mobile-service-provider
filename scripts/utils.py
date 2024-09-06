@@ -26,7 +26,7 @@ def missing_values_table(df):
         '% of Total Values', ascending=False).round(1)
 
     # Print some summary information
-    print("Your selected dataframe has " + str(df.shape[1]) + " columns.\n"
+    print("The selected dataframe has " + str(df.shape[1]) + " columns.\n"
           "There are " + str(mis_val_table_ren_columns.shape[0]) +
           " columns that have missing values.")
 
