@@ -1,2 +1,7 @@
 week2
 data
+.env
+less_engaged_centroid.npy
+worst_experience_centroid.npy
+notebooks/cleand-data.csv
+notebooks/final_data.csv
