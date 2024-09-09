@@ -1,56 +1,32 @@
+import os
+from dotenv import load_dotenv
 import psycopg2
+from sqlalchemy import create_engine
 import pandas as pd
 
-class PostgresConnection:
-    def __init__(self, dbname, user, password, host='localhost', port='5434'):
-        self.dbname = dbname
-        self.user = user
-        self.password = password
-        self.host = host
-        self.port = port
-        self.conn = None
-        self.cursor = None
+load_dotenv()
 
-    def connect(self):
-        try:
-            self.conn = psycopg2.connect(
-                dbname=self.dbname,
-                user=self.user,
-                password=self.password,
-                host=self.host,
-                port=self.port
-            )
-            self.cursor = self.conn.cursor()
-            print("Connected to PostgreSQL database!")
-        except Exception as e:
-            print(f"Error: {e}")
+user = os.getenv('DB_USER')
+password = os.getenv('DB_PASSWORD')
+host = os.getenv('DB_HOST')
+port = os.getenv('DB_PORT')
+database = os.getenv('DB_NAME')
 
-    def execute_query(self, query):
-        try:
-            self.cursor.execute(query)
-            rows = self.cursor.fetchall()
-            return rows
-        except Exception as e:
-            print(f"Error executing query: {e}")
-            return None
-
-    def close_connection(self):
-        if self.conn is not None:
-            self.conn.close()
-            print("Connection closed.")
-
-# Example usage:
-# Replace dbname, user, password with your actual database credentials
-db = PostgresConnection(dbname='postgres', user='postgres', password='123')
-db.connect()
-
-# Example query
-query = "SELECT * FROM xdr_data"
-result = db.execute_query(query)
-
-# Convert the result to a Pandas DataFrame
-df = pd.DataFrame(result, columns=[desc[0] for desc in db.cursor.description])
-print(df.head())  # Display the first few rows of the DataFrame
-
-# Close the connection when done
-db.close_connection()
+def load_data(query):
+    try:
+        print('Connecting to database..')
+        conn = psycopg2.connect(
+            host=host,
+            port=port,
+            database=database,
+            user=user,
+            password=password
+        )
+    except Exception as error:
+        print("Error: %s" % error)
+        return None
+        
+    print("Connection successful!")
+    df = pd.read_sql_query(query, conn)
+    conn.close()
+    return df
